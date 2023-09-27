@@ -1,22 +1,23 @@
 <template>
     <div class="dialog_background">
         <div class="captcha_card">
-            <header>请输入验证码</header>
+            <header>请输入验证码后下载</header>
             <div class="row">
                 <span>验证码: </span>
-                <input type="text" placeholder="请输入" />
+                <input v-model="input_text" type="text" required placeholder="请输入" />
                 <div v-html="svg" @click="refreshCaptcha" class="captcha"></div>
             </div>
-            <div class="row">
-                <div class="button cancel_button">取 消</div>
-                <div class="button confirm_button">下 载</div>
+            <div class="validation_row" >{{ validate_error }}</div>
+            <div class="button_row">
+                <div class="button cancel_button" @click="cancel">取 消</div>
+                <div class="button confirm_button" @click="downloadBook">下 载</div>
             </div>
         </div>
     </div>
 </template>
 
 <script setup lang="ts">
-    import { ref, onMounted } from 'vue';
+    import { ref, onMounted,defineEmits } from 'vue';
     import { getCaptcha } from '@/apis/captcha';
 
     // const props=defineProps({
@@ -28,11 +29,38 @@
 
     const svg = ref('');
     const captcha_text = ref('');
+    const input_text=ref('')
+    const validate_error=ref('')
+
 
     async function refreshCaptcha() {
         const res = await getCaptcha();
         svg.value = res.data.data;
         captcha_text.value = res.data.text;
+    }
+
+    function validate(){
+        return new Promise(async (resolve,reject)=>{
+            if(!input_text.value){
+                validate_error.value='*请输入验证码'
+                reject()
+            }else if(input_text.value!=captcha_text.value){
+                validate_error.value='*验证码错误'
+                await refreshCaptcha()
+                reject()
+            }else{
+                validate_error.value=''
+                resolve(null)
+            }
+        })
+    }
+
+    function cancel(){
+
+    }
+
+    async function downloadBook(){
+        await validate()
     }
 
     onMounted(async () => {
@@ -49,7 +77,7 @@
         bottom: 0;
         height: 100%;
         // padding: 50px;
-        background-color: rgba(0, 0, 0,0.5);
+        background-color: rgba(0, 0, 0, 0.5);
         // background-color: white;
 
         .captcha_card {
@@ -65,9 +93,9 @@
                 padding-bottom: 20px;
             }
             .row {
+                padding-top: 15px;
                 display: flex;
-                padding: 15px 0;
-                span{
+                span {
                     line-height: 30px;
                     padding-right: 15px;
                 }
@@ -87,14 +115,28 @@
                         color: #606266;
                         font-size: 15px;
                     }
-
                 }
                 .captcha {
-                        display: inline-block;
-                        cursor: pointer;
-                    }
+                    display: inline-block;
+                    cursor: pointer;
+                }
 
-                .button{
+
+            }
+
+            .validation_row{
+                padding-bottom: 15px;
+                padding-left: 76px;
+                height: 12px;
+                color: red;
+                font-size: 13px;
+            }
+
+            .button_row {
+                padding: 15px 0;
+                display: flex;
+                justify-content: flex-end;
+                .button {
                     display: inline-block;
                     width: 76px;
                     height: 20px;
@@ -102,14 +144,18 @@
                     text-align: center;
                     border-radius: 10px;
                     padding: 10px 15px;
+                    font-size: 14px;
+                    font-weight: 600;
+                    cursor: pointer;
                 }
 
-                .cancel_button{
+                .cancel_button {
                     border: 1px solid #dcdfe6;
                 }
-                .confirm_button{
+                .confirm_button {
                     color: white;
                     background-color: #409eff;
+                    margin-left: 25px;
                 }
             }
         }

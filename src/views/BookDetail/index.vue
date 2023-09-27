@@ -33,7 +33,7 @@
                 </section>
             </section>
         </div>
-        <DownloadDialog v-if="show_captcha"></DownloadDialog>
+        <DownloadDialog v-if="show_captcha" @></DownloadDialog>
     </div>
 </template>
 
