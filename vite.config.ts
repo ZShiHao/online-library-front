@@ -18,7 +18,8 @@ export default defineConfig({
     // host:'172.20.8.223',
     port:9216,
     proxy:{
-      '/api':"http://172.20.9.234"
+      // '/api':"http://172.20.9.234",
+      '/api':"http://47.96.73.47"
     }
   }
 })

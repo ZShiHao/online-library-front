@@ -12,25 +12,30 @@
                 <div class="button cancel_button" @click="cancel">取 消</div>
                 <div class="button confirm_button" @click="downloadBook">下 载</div>
             </div>
+            <object :data="url" />
         </div>
     </div>
 </template>
 
 <script setup lang="ts">
-    import { ref, onMounted,defineEmits } from 'vue';
+    import { ref, onMounted } from 'vue';
     import { getCaptcha } from '@/apis/captcha';
+import { getBookDownloadURL } from '@/apis/books';
 
-    // const props=defineProps({
-    //     value:{
-    //         type:Boolean,
-    //         default:false
-    //     }
-    // })
+    const props=defineProps({
+     bookId:{
+            type:String
+        }
+    })
+
+    const emit=defineEmits(['cancel','download'])
 
     const svg = ref('');
     const captcha_text = ref('');
     const input_text=ref('')
     const validate_error=ref('')
+    const url=ref('')
+
 
 
     async function refreshCaptcha() {
@@ -44,7 +49,7 @@
             if(!input_text.value){
                 validate_error.value='*请输入验证码'
                 reject()
-            }else if(input_text.value!=captcha_text.value){
+            }else if(input_text.value.toLowerCase()!=captcha_text.value.toLowerCase()){
                 validate_error.value='*验证码错误'
                 await refreshCaptcha()
                 reject()
@@ -56,11 +61,21 @@
     }
 
     function cancel(){
-
+     emit('cancel')
     }
 
     async function downloadBook(){
         await validate()
+        const res=await getBookDownloadURL(props.bookId)
+        // url.value=res.data.url
+
+        const a=document.createElement('a')
+        a.href=res.data.url
+        // a.download=''
+        a.click()
+        emit('download')
+
+
     }
 
     onMounted(async () => {

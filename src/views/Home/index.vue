@@ -16,18 +16,30 @@
 
 <template>
     <div class="home_container">
-        <Search></Search>
-        <Tags></Tags>
+     <section class="banner">
+      <Search></Search>
+     </section>
+     <section class="content">
+      <Tags></Tags>
         <BooksShelf type="download" title="下载榜"></BooksShelf>
         <BooksShelf type="updateDate" title="最近更新"></BooksShelf>
+     </section>
     </div>
 </template>
 
 <style lang="scss" scoped>
     .home_container {
         // max-width: 1300px;
-        width: 900px;
+
+        .banner{
+         background-color: #edeef0;
+         // background: linear-gradient(to bottom, #edeef0, #CFDEF3);
+        }
+ 
+        .content{
+         width: 900px;
         margin: 0 auto;
         padding: 2rem;
+        }
     }
 </style>

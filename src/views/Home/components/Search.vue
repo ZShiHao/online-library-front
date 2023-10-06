@@ -13,25 +13,29 @@
 
 <style lang="scss" scoped>
 .search_container{
-    height: 150px;
-    margin: 30px auto;
+    height: 270px;
+    margin: 0 auto;
+    padding: 30px 0;
+
     display: flex;
     justify-content: center;
     align-items: center;
     section{
         text-align: center;
         Header{
-            font-size: 20px;
+           font-family: '仿宋';
+            font-size: 35px;
             font-weight: 600;
+            color: black;
             margin-bottom: 15px;
         }
         input{
             outline: none;
-            height: 35px;
-            width: 350px;
+            height: 40px;
+            width: 440px;
             padding-left: 20px;
-            border-radius: 17.5px;
-            border: 1px solid grey;
+            border-radius: 20px;
+            border: 1px solid rgb(250, 250, 250);
             box-shadow: 0 4px 20px rgba(0,25,104,.05);
         }
     }

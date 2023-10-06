@@ -33,7 +33,7 @@
                 </section>
             </section>
         </div>
-        <DownloadDialog v-if="show_captcha" @></DownloadDialog>
+        <DownloadDialog :bookId="book.id" v-if="show_captcha" @cancel="cancelHandler" @download="cancelHandler"></DownloadDialog>
     </div>
 </template>
 
@@ -49,6 +49,10 @@
     }>({});
 
     const show_captcha=ref(false)
+
+    function cancelHandler(){
+     show_captcha.value=false
+    }
 
 
     onMounted(async () => {

@@ -16,8 +16,8 @@ const goHome=()=>router.push('/')
     position: fixed;
     width: 100%;
     height: 40px;
-    border-bottom: 1px solid #d4d4d4;
-    background-color: #fff;
+    // border-bottom: 1px solid #d4d4d4;
+    // background-color: #fff;
 
     padding: 0 150px;
 

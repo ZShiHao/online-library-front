@@ -1,6 +1,6 @@
 <template>
     <div class="outer_container">
-        <header>分类</header>
+        <!-- <header>分类</header> -->
         <div class="row" v-for="{ tags, name } in category">
             <div class="category">{{ name }}</div>
             <div class="tags">
@@ -24,11 +24,12 @@
 
 <style lang="scss" scoped>
     .outer_container {
-        border: 1px solid grey;
+        // border: 1px solid grey;
         border-radius: 10px;
         margin: 0 auto;
         width: 800px;
         padding: 25px;
+        font-family: '宋体';
         .row {
             display: flex;
             padding-top: 10px;
